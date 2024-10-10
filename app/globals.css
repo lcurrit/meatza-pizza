@@ -25,3 +25,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.btn {
+  @apply bg-blue-500 p-3 rounded mx-2;
+}
