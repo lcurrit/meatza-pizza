@@ -10,6 +10,10 @@
 - Install Node
 - `npm run dev`
 
+## Database
+
+Postgres via Vercel
+
 ## Testing
 
 Jest
@@ -17,6 +21,6 @@ Jest
 # Notes
 
 - https://github.com/StrongMind/culture/blob/main/recruit/full-stack-developer.md
-- https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_components
 - https://vercel.com/docs/storage/vercel-postgres/quickstart
 - https://nextjs.org/docs/app/building-your-application/routing/defining-routes
+- https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_interactivity_events_state

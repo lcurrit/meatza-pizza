@@ -1,11 +1,43 @@
 "use client";
 
-import { FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 
-export default function Form({ addTopping }: any) {
+interface ToppingProps {
+  id: string;
+  name: string;
+}
+
+interface FormProps {
+  addTopping: (name: string) => void;
+  toppings: ToppingProps[];
+}
+
+export default function Form({ addTopping, toppings }: FormProps) {
+  const [topping, setTopping] = useState("");
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setTopping(event.target.value);
+  }
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    addTopping("Say hello!");
+
+    const trimmedTopping = topping.trim();
+    if (trimmedTopping === "") {
+      return;
+    }
+
+    if (
+      toppings.some(
+        (existingTopping) =>
+          existingTopping.name.toLowerCase() === trimmedTopping.toLowerCase()
+      )
+    ) {
+      alert("This topping is already in the list.");
+      return;
+    }
+
+    addTopping(trimmedTopping);
+    setTopping("");
   }
 
   return (
@@ -18,9 +50,10 @@ export default function Form({ addTopping }: any) {
       <input
         type="text"
         id="new-todo-input"
-        className="input input__lg"
         name="text"
         autoComplete="off"
+        value={topping}
+        onChange={handleChange}
       />
       <button type="submit" className="btn btn__primary btn__lg">
         Add

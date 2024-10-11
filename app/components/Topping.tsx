@@ -1,21 +1,10 @@
-export default function Topping({
-  name,
-  id,
-  completed,
-}: {
-  name: string;
-  id: string;
-  completed?: boolean;
-}) {
+export default function Topping({ name, id }: { name: string; id: string }) {
   return (
-    <li className="todo stack-small">
+    <li className="todo stack-small mb-2">
       <div className="c-cb">
-        <input id={id} type="checkbox" defaultChecked={completed} />
         <label className="todo-label" htmlFor={id}>
           {name}
         </label>
-      </div>
-      <div className="btn-group">
         <button type="button" className="btn">
           Edit <span className="visually-hidden">{name}</span>
         </button>

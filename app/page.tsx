@@ -1,39 +1,45 @@
 "use client";
 
+import { useState } from "react";
+import { nanoid } from "nanoid";
 import Form from "./components/Form";
 import Topping from "./components/Topping";
 
-const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Repeat", completed: false },
-];
-
-function addTopping(name: string): void {
-  alert(name);
+interface ToppingProps {
+  id: string;
+  name: string;
 }
 
+// Connect this to database, pull initial value.
+const DATA = [
+  { id: "todo-0", name: "Cheese" },
+  { id: "todo-1", name: "Jalepenos" },
+  { id: "todo-2", name: "Bacon" },
+];
+
 export default function Home() {
-  const taskList = DATA.map((task) => (
-    <Topping
-      id={task.id}
-      name={task.name}
-      completed={task.completed}
-      key={task.id}
-    />
+  const [toppings, setToppings] = useState(DATA);
+
+  function addTopping(name: string): void {
+    const newTopping = { id: `topping-${nanoid()}`, name };
+    setToppings([...toppings, newTopping]);
+  }
+  const toppingList = toppings.map((topping: ToppingProps) => (
+    <Topping id={topping.id} name={topping.name} key={topping.id} />
   ));
+  const headingText = `Total Toppings: ${toppingList.length}`;
 
   return (
-    <div className="todoapp stack-large">
+    <div className="container mx-auto">
       <h1>Meatza Pizza</h1>
-      <Form addTopping={addTopping} />
-      <h2 id="list-heading">3 tasks remaining</h2>
+      <Form addTopping={addTopping} toppings={toppings} />
+      <h2 id="list-heading">{headingText}</h2>
       <ul
         role="list"
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
       >
-        {taskList}
+        {toppingList}
       </ul>
     </div>
   );
