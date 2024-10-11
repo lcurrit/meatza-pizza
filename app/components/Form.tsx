@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, FormEvent, ChangeEvent } from "react";
-
-interface ToppingProps {
-  id: string;
-  name: string;
-}
+import { ToppingProps } from "@/app/types/types";
 
 interface FormProps {
   addTopping: (name: string) => void;

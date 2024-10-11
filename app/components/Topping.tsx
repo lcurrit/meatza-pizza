@@ -1,4 +1,6 @@
-export default function Topping({ name, id }: { name: string; id: string }) {
+import { ToppingProps } from "@/app/types/types";
+
+export default function Topping({ name, id, deleteTopping }: ToppingProps) {
   return (
     <li className="todo stack-small mb-2">
       <div className="c-cb">
@@ -8,7 +10,11 @@ export default function Topping({ name, id }: { name: string; id: string }) {
         <button type="button" className="btn">
           Edit <span className="visually-hidden">{name}</span>
         </button>
-        <button type="button" className="btn btn__danger">
+        <button
+          type="button"
+          className="btn btn__danger"
+          onClick={() => deleteTopping(id)}
+        >
           Delete <span className="visually-hidden">{name}</span>
         </button>
       </div>
