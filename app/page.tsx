@@ -17,19 +17,37 @@ export default function Home() {
   const [toppings, setToppings] = useState<ToppingProps[]>([]);
 
   function addTopping(name: string): void {
-    const newTopping = { id: `topping-${nanoid()}`, name, deleteTopping };
+    const newTopping = {
+      id: `topping-${nanoid()}`,
+      name,
+      deleteTopping,
+      editTopping,
+    };
     setToppings([...toppings, newTopping]);
   }
+
   function deleteTopping(id: string): void {
     const remainingToppings = toppings.filter((topping) => id !== topping.id);
     setToppings(remainingToppings);
   }
+
+  function editTopping(id: string, newName: string) {
+    const editedToppingList = toppings.map((topping) => {
+      if (id === topping.id) {
+        return { ...topping, name: newName };
+      }
+      return topping;
+    });
+    setToppings(editedToppingList);
+  }
+
   const toppingList = toppings.map((topping: ToppingProps) => (
     <Topping
       id={topping.id}
       name={topping.name}
       key={topping.id}
       deleteTopping={deleteTopping}
+      editTopping={editTopping}
     />
   ));
   const headingText = `Total Toppings: ${toppingList.length}`;
