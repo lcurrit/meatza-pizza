@@ -1,16 +1,8 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  ChangeEvent,
-  FormEvent,
-  MutableRefObject,
-} from "react";
+import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { ToppingProps } from "@/app/types/types";
 
-function usePrevious(value: any) {
-  //TODO: Define type
-  const ref = useRef();
+function usePrevious<T>(value: T): T | null {
+  const ref = useRef<T | null>(null);
   useEffect(() => {
     ref.current = value;
   });
@@ -59,7 +51,6 @@ export default function Topping({
           type="button"
           className="btn todo-cancel"
           onClick={() => setEditing(false)}
-          ref={editButtonRef}
         >
           Cancel <span className="visually-hidden">renaming {name}</span>
         </button>
@@ -79,7 +70,12 @@ export default function Topping({
         </label>
       </div>
       <div className="btn-group">
-        <button type="button" className="btn" onClick={() => setEditing(true)}>
+        <button
+          type="button"
+          className="btn"
+          onClick={() => setEditing(true)}
+          ref={editButtonRef}
+        >
           Edit <span className="visually-hidden">{name}</span>
         </button>
         <button

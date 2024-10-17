@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { nanoid } from "nanoid";
 import Form from "@/app/components/Form";
 import Topping from "@/app/components/Topping";
 import { ToppingProps } from "@/app/types/types";
+
+function usePrevious<T>(value: T): T | null {
+  const ref = useRef<T | null>(null);
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 // Connect this to database, pull initial value.
 // const DATA = [
@@ -50,13 +58,24 @@ export default function Home() {
       editTopping={editTopping}
     />
   ));
+
   const headingText = `Total Toppings: ${toppingList.length}`;
+  const listHeadingRef = useRef(null);
+  const prevToppingLength = usePrevious(toppings.length);
+
+  useEffect(() => {
+    if (toppings.length < prevToppingLength) {
+      listHeadingRef.current.focus();
+    }
+  }, [toppings.length, prevToppingLength]);
 
   return (
     <div className="container mx-auto">
       <h1>Meatza Pizza</h1>
       <Form toppings={toppings} addTopping={addTopping} />
-      <h2 id="list-heading">{headingText}</h2>
+      <h2 id="list-heading" tabIndex={-1} ref={listHeadingRef}>
+        {headingText}
+      </h2>
       <ul
         role="list"
         className="todo-list stack-large stack-exception"
